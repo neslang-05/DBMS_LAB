@@ -1,0 +1,197 @@
+Enter password: *********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 11
+Server version: 8.0.28 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases
+    -> ;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| pnr_club           |
+| sakila             |
+| student_info       |
+| sys                |
+| world              |
++--------------------+
+8 rows in set (0.00 sec)
+
+mysql> use student_info
+Database changed
+mysql> show tables
+    -> ;
++------------------------+
+| Tables_in_student_info |
++------------------------+
+| course                 |
+| grade_report           |
+| prerequisite           |
+| section                |
+| student                |
++------------------------+
+5 rows in set (0.00 sec)
+
+mysql> select name from student
+    -> ;
++-------+
+| name  |
++-------+
+| Smith |
+| Brown |
++-------+
+2 rows in set (0.04 sec)
+
+mysql> select credit_hrs from grade_report where course_name = "data_structures"
+    -> ;
+ERROR 1054 (42S22): Unknown column 'credit_hrs' in 'field list'
+mysql> select credit_hrs from courses where course_name = "data_structures";
+ERROR 1146 (42S02): Table 'student_info.courses' doesn't exist
+mysql> select*from course
+    -> ;
++---------------------------+---------------+--------------+------------+
+| Course_name               | Course_number | Credit_hours | Department |
++---------------------------+---------------+--------------+------------+
+| Intro to Computer Science | CS1310        |            4 | CS         |
+| Data Structures           | CS3320        |            4 | CS         |
+| Discrete Mathematics      | MATH2410      |            3 | MATH       |
+| Database                  | CS3380        |            3 | CS         |
++---------------------------+---------------+--------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select Credit_hours from course where course_name ="Data Structures"
+    -> ;
++--------------+
+| Credit_hours |
++--------------+
+|            4 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> select*from course
+    -> ;
++---------------------------+---------------+--------------+------------+
+| Course_name               | Course_number | Credit_hours | Department |
++---------------------------+---------------+--------------+------------+
+| Intro to Computer Science | CS1310        |            4 | CS         |
+| Data Structures           | CS3320        |            4 | CS         |
+| Discrete Mathematics      | MATH2410      |            3 | MATH       |
+| Database                  | CS3380        |            3 | CS         |
++---------------------------+---------------+--------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select distinct departmnet from course
+    -> ;
+ERROR 1054 (42S22): Unknown column 'departmnet' in 'field list'
+mysql> select distinct department from course;
++------------+
+| department |
++------------+
+| CS         |
+| MATH       |
++------------+
+2 rows in set (0.00 sec)
+
+mysql> select count name from student ;
+ERROR 1054 (42S22): Unknown column 'count' in 'field list'
+mysql> select count (name) from student;
+ERROR 1630 (42000): FUNCTION student_info.count does not exist. Check the 'Function Name Parsing and Resolution' section in the Reference Manual
+mysql> select count(Name) from student;
++-------------+
+| count(Name) |
++-------------+
+|           2 |
++-------------+
+1 row in set (0.01 sec)
+
+mysql> select count(Name) as no_of_student from student;
++---------------+
+| no_of_student |
++---------------+
+|             2 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> select sum(Credit_hours) from student
+    -> ;
+ERROR 1054 (42S22): Unknown column 'Credit_hours' in 'field list'
+mysql> select sum(Credit_hours) from course;
++-------------------+
+| sum(Credit_hours) |
++-------------------+
+|                14 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> select avg(Credit_hours) from course
+    -> ;
++-------------------+
+| avg(Credit_hours) |
++-------------------+
+|            3.5000 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> select* from section
+    -> ;
++--------------------+---------------+----------+------+------------+
+| Section_identifier | Course_number | Semester | Year | Instructor |
++--------------------+---------------+----------+------+------------+
+|                 85 | MATH2410      | Fall     |    7 | King       |
+|                 92 | CS1310        | Fall     |    7 | Anderson   |
+|                102 | CS3320        | Spring   |    8 | Knuth      |
+|                112 | MATH2410      | Fall     |    8 | Chang      |
+|                119 | CS1310        | Fall     |    8 | Anderson   |
+|                135 | CS3380        | Fall     |    8 | Stone      |
++--------------------+---------------+----------+------+------------+
+6 rows in set (0.00 sec)
+
+mysql> select*from section
+    -> ;
++--------------------+---------------+----------+------+------------+
+| Section_identifier | Course_number | Semester | Year | Instructor |
++--------------------+---------------+----------+------+------------+
+|                 85 | MATH2410      | Fall     |    7 | King       |
+|                 92 | CS1310        | Fall     |    7 | Anderson   |
+|                102 | CS3320        | Spring   |    8 | Knuth      |
+|                112 | MATH2410      | Fall     |    8 | Chang      |
+|                119 | CS1310        | Fall     |    8 | Anderson   |
+|                135 | CS3380        | Fall     |    8 | Stone      |
++--------------------+---------------+----------+------+------------+
+6 rows in set (0.00 sec)
+
+mysql> update sectionset
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> update section set
+    -> instructor ='Peter' where
+    -> Section_identifier = 85;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select*from section
+    -> ;
++--------------------+---------------+----------+------+------------+
+| Section_identifier | Course_number | Semester | Year | Instructor |
++--------------------+---------------+----------+------+------------+
+|                 85 | MATH2410      | Fall     |    7 | Peter      |
+|                 92 | CS1310        | Fall     |    7 | Anderson   |
+|                102 | CS3320        | Spring   |    8 | Knuth      |
+|                112 | MATH2410      | Fall     |    8 | Chang      |
+|                119 | CS1310        | Fall     |    8 | Anderson   |
+|                135 | CS3380        | Fall     |    8 | Stone      |
++--------------------+---------------+----------+------+------------+
+6 rows in set (0.00 sec)
+
+mysql>
+mysql>

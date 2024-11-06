@@ -1,0 +1,576 @@
+Enter password: *********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.28 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show database
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'database' at line 1
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| employee_info      |
+| information_schema |
+| mysql              |
+| performance_schema |
+| pnr_club           |
+| sakila             |
+| student_info       |
+| sys                |
+| world              |
++--------------------+
+9 rows in set (0.01 sec)
+
+mysql> use employee_info;
+Database changed
+mysql> show tables
+    -> ;
++-------------------------+
+| Tables_in_employee_info |
++-------------------------+
+| bonus                   |
+| title                   |
+| worker                  |
++-------------------------+
+3 rows in set (0.01 sec)
+
+mysql> select*from table bonus
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table bonus' at line 1
+mysql> CREATE DATABASE COMPANY_INFO;
+Query OK, 1 row affected (0.03 sec)
+
+mysql> show tables;
++-------------------------+
+| Tables_in_employee_info |
++-------------------------+
+| bonus                   |
+| title                   |
+| worker                  |
++-------------------------+
+3 rows in set (0.01 sec)
+
+mysql> use COMPANY_INFO
+Database changed
+mysql> CREATE TABLE EMPLOYEE(
+    ->     FNAME VARCHAR(20),
+    ->     MINIT CHAR(1),
+    ->     LNAME VARCHAR(20),
+    ->     SSN CHAR(9) PRIMARY KEY,
+    ->     BDATE DATE,
+    ->     ADDRESS_EMP VARCHAR(100),
+    ->     SEX CHAR(1),
+    ->     SALARY DECIMAL(10, 2),
+    ->     SUPER_SSN CHAR(9),
+    ->     DNO INT,
+    ->     FOREIGN KEY (SUPER_SSN) REFERENCES EMPLOYEE(SSN),
+    ->     FOREIGN KEY (DNO) REFERENCES DEPARTMENT(DNUMBER)
+    -> );
+ERROR 1824 (HY000): Failed to open the referenced table 'department'
+mysql>
+mysql> CREATE TABLE DEPARTMENT(
+    ->     DNAME VARCHAR(20),
+    ->     DNUMBER INT PRIMARY KEY,
+    ->     MGR_SSN CHAR(9) NOT NULL,
+    ->     MGR_START_DATE DATE,
+    ->     FOREIGN KEY (MGR_SSN) REFERENCES EMPLOYEE(SSN)
+    -> );
+ERROR 1824 (HY000): Failed to open the referenced table 'employee'
+mysql>
+mysql> CREATE TABLE DEPT_LOCATIONS(
+    ->     DNUMBER INT,
+    ->     DLOCATION VARCHAR(20),
+    ->     PRIMARY KEY (DNUMBER, DLOCATION),
+    ->     FOREIGN KEY (DNUMBER) REFERENCES DEPARTMENT(DNUMBER)
+    -> );
+ERROR 1824 (HY000): Failed to open the referenced table 'department'
+mysql>
+mysql> CREATE TABLE PROJECT(
+    ->     PNAME VARCHAR(20),
+    ->     PNUMBER INT PRIMARY KEY,
+    ->     PLOCATION VARCHAR(20),
+    ->     DNUM INT,
+    ->     FOREIGN KEY (DNUM) REFERENCES DEPARTMENT(DNUMBER)
+    -> );
+ERROR 1824 (HY000): Failed to open the referenced table 'department'
+mysql>
+mysql> CREATE TABLE WORKS_ON(
+    ->     ESSN CHAR(9),
+    ->     PNO INT,
+    ->     HOURS DECIMAL(3, 1),
+    ->     PRIMARY KEY (ESSN, PNO),
+    ->     FOREIGN KEY (ESSN) REFERENCES EMPLOYEE(SSN),
+    ->     FOREIGN KEY (PNO) REFERENCES PROJECT(PNUMBER)
+    -> );
+ERROR 1824 (HY000): Failed to open the referenced table 'employee'
+mysql>
+mysql> CREATE TABLE DEPENDENT(
+    ->     ESSN CHAR(9),
+    ->     DEPENDENT_NAME VARCHAR(20),
+    ->     SEX CHAR(1),
+    ->     BDATE DATE,
+    ->     RELATIONSHIP VARCHAR(20),
+    ->     PRIMARY KEY (ESSN, DEPENDENT_NAME),
+    ->     FOREIGN KEY (ESSN) REFERENCES EMPLOYEE(SSN)
+    -> );
+ERROR 1824 (HY000): Failed to open the referenced table 'employee'
+mysql> SHOW TABLES;
+Empty set (0.00 sec)
+
+mysql> CREATE TABLE EMPLOYEE(
+    ->     FNAME VARCHAR(20),
+    ->     MINIT CHAR(1),
+    ->     LNAME VARCHAR(20),
+    ->     SSN CHAR(9) PRIMARY KEY,
+    ->     BDATE DATE,
+    ->     ADDRESS_EMP VARCHAR(100),
+    ->     SEX CHAR(1),
+    ->     SALARY DECIMAL(10, 2),
+    ->     SUPER_SSN CHAR(9),
+    ->     DNO INT,
+    ->     FOREIGN KEY (SUPER_SSN) REFERENCES EMPLOYEE(SSN),
+    ->     FOREIGN KEY (DNO) REFERENCES DEPARTMENT(DNUMBER)
+    -> );
+ERROR 1824 (HY000): Failed to open the referenced table 'department'
+mysql> CREATE TABLE DEPARTMENT(
+    ->     DNAME VARCHAR(20),
+    ->     DNUMBER INT PRIMARY KEY,
+    ->     MGR_SSN CHAR(9) NOT NULL,
+    ->     MGR_START_DATE DATE,
+    ->     FOREIGN KEY (MGR_SSN) REFERENCES EMPLOYEE(SSN)
+    -> );
+ERROR 1824 (HY000): Failed to open the referenced table 'employee'
+mysql> CREATE TABLE DEPARTMENT(
+    ->     DNAME VARCHAR(20),
+    ->     DNUMBER INT PRIMARY KEY,
+    ->     MGR_SSN CHAR(9) NOT NULL,
+    ->     MGR_START_DATE DATE,
+    ->     FOREIGN KEY (MGR_SSN) REFERENCES EMPLOYEE(SSN)
+    -> );
+ERROR 1824 (HY000): Failed to open the referenced table 'employee'
+mysql>
+mysql> CREATE TABLE EMPLOYEE(
+    ->     FNAME VARCHAR(20),
+    ->     MINIT CHAR(1),
+    ->     LNAME VARCHAR(20),
+    ->     SSN CHAR(9) PRIMARY KEY,
+    ->     BDATE DATE,
+    ->     ADDRESS_EMP VARCHAR(100),
+    ->     SEX CHAR(1),
+    ->     SALARY DECIMAL(10, 2),
+    ->     SUPER_SSN CHAR(9),
+    ->     DNO INT,
+    ->     FOREIGN KEY (SUPER_SSN) REFERENCES EMPLOYEE(SSN),
+    ->     FOREIGN KEY (DNO) REFERENCES DEPARTMENT(DNUMBER)
+    -> );
+ERROR 1824 (HY000): Failed to open the referenced table 'department'
+mysql>
+mysql> CREATE TABLE DEPT_LOCATIONS(
+    ->     DNUMBER INT,
+    ->     DLOCATION VARCHAR(20),
+    ->     PRIMARY KEY (DNUMBER, DLOCATION),
+    ->     FOREIGN KEY (DNUMBER) REFERENCES DEPARTMENT(DNUMBER)
+    -> );
+ERROR 1824 (HY000): Failed to open the referenced table 'department'
+mysql>
+mysql> CREATE TABLE PROJECT(
+    ->     PNAME VARCHAR(20),
+    ->     PNUMBER INT PRIMARY KEY,
+    ->     PLOCATION VARCHAR(20),
+    ->     DNUM INT,
+    ->     FOREIGN KEY (DNUM) REFERENCES DEPARTMENT(DNUMBER)
+    -> );
+ERROR 1824 (HY000): Failed to open the referenced table 'department'
+mysql>
+mysql> CREATE TABLE WORKS_ON(
+    ->     ESSN CHAR(9),
+    ->     PNO INT,
+    ->     HOURS DECIMAL(3, 1),
+    ->     PRIMARY KEY (ESSN, PNO),
+    ->     FOREIGN KEY (ESSN) REFERENCES EMPLOYEE(SSN),
+    ->     FOREIGN KEY (PNO) REFERENCES PROJECT(PNUMBER)
+    -> );
+ERROR 1824 (HY000): Failed to open the referenced table 'employee'
+mysql>
+mysql> CREATE TABLE DEPENDENT(
+    ->     ESSN CHAR(9),
+    ->     DEPENDENT_NAME VARCHAR(20),
+    ->     SEX CHAR(1),
+    ->     BDATE DATE,
+    ->     RELATIONSHIP VARCHAR(20),
+    ->     PRIMARY KEY (ESSN, DEPENDENT_NAME),
+    ->     FOREIGN KEY (ESSN) REFERENCES EMPLOYEE(SSN)
+    -> );
+ERROR 1824 (HY000): Failed to open the referenced table 'employee'
+mysql> CREATE TABLE DEPARTMENT(
+    ->     DNAME VARCHAR(20),
+    ->     DNUMBER INT PRIMARY KEY,
+    ->     MGR_SSN CHAR(9) NOT NULL,
+    ->     MGR_START_DATE DATE
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql>
+mysql> CREATE TABLE EMPLOYEE(
+    ->     FNAME VARCHAR(20),
+    ->     MINIT CHAR(1),
+    ->     LNAME VARCHAR(20),
+    ->     SSN CHAR(9) PRIMARY KEY,
+    ->     BDATE DATE,
+    ->     ADDRESS_EMP VARCHAR(100),
+    ->     SEX CHAR(1),
+    ->     SALARY DECIMAL(10, 2),
+    ->     SUPER_SSN CHAR(9),
+    ->     DNO INT
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql>
+mysql> CREATE TABLE DEPT_LOCATIONS(
+    ->     DNUMBER INT,
+    ->     DLOCATION VARCHAR(20),
+    ->     PRIMARY KEY (DNUMBER, DLOCATION)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql>
+mysql> CREATE TABLE PROJECT(
+    ->     PNAME VARCHAR(20),
+    ->     PNUMBER INT PRIMARY KEY,
+    ->     PLOCATION VARCHAR(20),
+    ->     DNUM INT
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql>
+mysql> CREATE TABLE WORKS_ON(
+    ->     ESSN CHAR(9),
+    ->     PNO INT,
+    ->     HOURS DECIMAL(3, 1),
+    ->     PRIMARY KEY (ESSN, PNO)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql>
+mysql> CREATE TABLE DEPENDENT(
+    ->     ESSN CHAR(9),
+    ->     DEPENDENT_NAME VARCHAR(20),
+    ->     SEX CHAR(1),
+    ->     BDATE DATE,
+    ->     RELATIONSHIP VARCHAR(20),
+    ->     PRIMARY KEY (ESSN, DEPENDENT_NAME)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> ALTER TABLE EMPLOYEE
+    ->     ADD FOREIGN KEY (SUPER_SSN) REFERENCES EMPLOYEE(SSN),
+    ->     ADD FOREIGN KEY (DNO) REFERENCES DEPARTMENT(DNUMBER);
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> ALTER TABLE DEPARTMENT
+    ->     ADD FOREIGN KEY (MGR_SSN) REFERENCES EMPLOYEE(SSN);
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> ALTER TABLE DEPT_LOCATIONS
+    ->     ADD FOREIGN KEY (DNUMBER) REFERENCES DEPARTMENT(DNUMBER);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> ALTER TABLE PROJECT
+    ->     ADD FOREIGN KEY (DNUM) REFERENCES DEPARTMENT(DNUMBER);
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> ALTER TABLE WORKS_ON
+    ->     ADD FOREIGN KEY (ESSN) REFERENCES EMPLOYEE(SSN),
+    ->     ADD FOREIGN KEY (PNO) REFERENCES PROJECT(PNUMBER);
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> ALTER TABLE DEPENDENT
+    ->     ADD FOREIGN KEY (ESSN) REFERENCES EMPLOYEE(SSN);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC EMPLOYEE
+    -> ;
++-------------+---------------+------+-----+---------+-------+
+| Field       | Type          | Null | Key | Default | Extra |
++-------------+---------------+------+-----+---------+-------+
+| FNAME       | varchar(20)   | YES  |     | NULL    |       |
+| MINIT       | char(1)       | YES  |     | NULL    |       |
+| LNAME       | varchar(20)   | YES  |     | NULL    |       |
+| SSN         | char(9)       | NO   | PRI | NULL    |       |
+| BDATE       | date          | YES  |     | NULL    |       |
+| ADDRESS_EMP | varchar(100)  | YES  |     | NULL    |       |
+| SEX         | char(1)       | YES  |     | NULL    |       |
+| SALARY      | decimal(10,2) | YES  |     | NULL    |       |
+| SUPER_SSN   | char(9)       | YES  | MUL | NULL    |       |
+| DNO         | int           | YES  | MUL | NULL    |       |
++-------------+---------------+------+-----+---------+-------+
+10 rows in set (0.03 sec)
+
+mysql> ^C
+mysql>
+mysql> INSERT INTO EMPLOYEE (FNAME, MINIT, LNAME, SSN, BDATE, ADDRESS_EMP, SEX, SALARY, SUPER_SSN, DNO)
+    -> VALUES
+    ->     ('John', 'B', 'Smith', '123456789', '1965-01-09', '731-Fondren-Houston-TX', 'M', 30000.00, '333445555', 5),
+    ->     ('Franklin', 'T', 'Wong', '333445555', '1955-12-08', '638-Voss-Houston-TX', 'M', 40000.00, '888665555', 5),
+    ->     ('Alicia', 'J', 'Zelaya', '999887777', '1968-01-19', '3321-Castle-Spring-TX', 'F', 25000.00, '987654321', 4),
+    ->     ('Jennifer', 'S', 'Wallace', '987654321', '1941-06-20', '291-Berry-Bellaire-TX', 'F', 43000.00, '888665555', 4),
+    ->     ('Ramesh', 'K', 'Narayan', '666884444', '1962-09-15', '975-Fire-Oak-Humble-TX', 'M', 38000.00, '333445555', 5);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`company_info`.`employee`, CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`SUPER_SSN`) REFERENCES `employee` (`SSN`))
+mysql> -- Insert employees without the SUPER_SSN
+mysql> INSERT INTO EMPLOYEE (FNAME, MINIT, LNAME, SSN, BDATE, ADDRESS_EMP, SEX, SALARY, DNO)
+    -> VALUES
+    ->     ('John', 'B', 'Smith', '123456789', '1965-01-09', '731-Fondren-Houston-TX', 'M', 30000.00, 5),
+    ->     ('Franklin', 'T', 'Wong', '333445555', '1955-12-08', '638-Voss-Houston-TX', 'M', 40000.00, 5),
+    ->     ('Alicia', 'J', 'Zelaya', '999887777', '1968-01-19', '3321-Castle-Spring-TX', 'F', 25000.00, 4),
+    ->     ('Jennifer', 'S', 'Wallace', '987654321', '1941-06-20', '291-Berry-Bellaire-TX', 'F', 43000.00, 4),
+    ->     ('Ramesh', 'K', 'Narayan', '666884444', '1962-09-15', '975-Fire-Oak-Humble-TX', 'M', 38000.00, 5);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`company_info`.`employee`, CONSTRAINT `employee_ibfk_2` FOREIGN KEY (`DNO`) REFERENCES `department` (`DNUMBER`))
+mysql>
+mysql> -- Now update the SUPER_SSN values
+mysql> UPDATE EMPLOYEE SET SUPER_SSN = '333445555' WHERE SSN = '123456789';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> UPDATE EMPLOYEE SET SUPER_SSN = '888665555' WHERE SSN = '333445555';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> UPDATE EMPLOYEE SET SUPER_SSN = '987654321' WHERE SSN = '999887777';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> UPDATE EMPLOYEE SET SUPER_SSN = '888665555' WHERE SSN = '987654321';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> UPDATE EMPLOYEE SET SUPER_SSN = '333445555' WHERE SSN = '666884444';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql>
+mysql> -- Insert the DEPARTMENT
+mysql> INSERT INTO DEPARTMENT (DNAME, DNUMBER, MGR_SSN, MGR_START_DATE)
+    -> VALUES
+    ->     ('Headquarters', 1, '888665555', '1981-06-19'),
+    ->     ('Administration', 4, '987654321', '1995-01-01'),
+    ->     ('Research', 5, '333445555', '1988-05-22');
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`company_info`.`department`, CONSTRAINT `department_ibfk_1` FOREIGN KEY (`MGR_SSN`) REFERENCES `employee` (`SSN`))
+mysql> -- Insert the DEPARTMENT
+mysql> INSERT INTO DEPARTMENT (DNAME, DNUMBER, MGR_SSN, MGR_START_DATE)
+    -> VALUES
+    ->     ('Headquarters', 1, '888665555', '1981-06-19'),
+    ->     ('Administration', 4, '987654321', '1995-01-01'),
+    ->     ('Research', 5, '333445555', '1988-05-22');
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`company_info`.`department`, CONSTRAINT `department_ibfk_1` FOREIGN KEY (`MGR_SSN`) REFERENCES `employee` (`SSN`))
+mysql> select*from EMPLOYEE;
+Empty set (0.00 sec)
+
+mysql> -- Insert employees without the SUPER_SSN
+mysql> INSERT INTO EMPLOYEE (FNAME, MINIT, LNAME, SSN, BDATE, ADDRESS_EMP, SEX, SALARY, DNO)
+    -> VALUES
+    ->     ('John', 'B', 'Smith', '123456789', '1965-01-09', '731-Fondren-Houston-TX', 'M', 30000.00, 5),
+    ->     ('Franklin', 'T', 'Wong', '333445555', '1955-12-08', '638-Voss-Houston-TX', 'M', 40000.00, 5),
+    ->     ('Alicia', 'J', 'Zelaya', '999887777', '1968-01-19', '3321-Castle-Spring-TX', 'F', 25000.00, 4),
+    ->     ('Jennifer', 'S', 'Wallace', '987654321', '1941-06-20', '291-Berry-Bellaire-TX', 'F', 43000.00, 4),
+    ->     ('Ramesh', 'K', 'Narayan', '666884444', '1962-09-15', '975-Fire-Oak-Humble-TX', 'M', 38000.00, 5);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`company_info`.`employee`, CONSTRAINT `employee_ibfk_2` FOREIGN KEY (`DNO`) REFERENCES `department` (`DNUMBER`))
+mysql>
+mysql> -- Now update the SUPER_SSN values
+mysql> UPDATE EMPLOYEE SET SUPER_SSN = '333445555' WHERE SSN = '123456789';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> UPDATE EMPLOYEE SET SUPER_SSN = '888665555' WHERE SSN = '333445555';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> UPDATE EMPLOYEE SET SUPER_SSN = '987654321' WHERE SSN = '999887777';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> UPDATE EMPLOYEE SET SUPER_SSN = '888665555' WHERE SSN = '987654321';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> UPDATE EMPLOYEE SET SUPER_SSN = '333445555' WHERE SSN = '666884444';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql>
+mysql> -- Insert the DEPARTMENT
+mysql> INSERT INTO DEPARTMENT (DNAME, DNUMBER, MGR_SSN, MGR_START_DATE)
+    -> VALUES
+    ->     ('Headquarters', 1, '888665555', '1981-06-19'),
+    ->     ('Administration', 4, '987654321', '1995-01-01'),
+    ->     ('Research', 5, '333445555', '1988-05-22');
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`company_info`.`department`, CONSTRAINT `department_ibfk_1` FOREIGN KEY (`MGR_SSN`) REFERENCES `employee` (`SSN`))
+mysql>
+mysql> -- Insert the DEPT_LOCATIONS
+mysql> INSERT INTO DEPT_LOCATIONS (DNUMBER, DLOCATION)
+    -> VALUES
+    ->     (1, 'Houston'),
+    ->     (4, 'Stafford'),
+    ->     (5, 'Bellaire'),
+    ->     (5, 'Sugarland'),
+    ->     (5, 'Houston');
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`company_info`.`dept_locations`, CONSTRAINT `dept_locations_ibfk_1` FOREIGN KEY (`DNUMBER`) REFERENCES `department` (`DNUMBER`))
+mysql>
+mysql> -- Insert the PROJECT
+mysql> INSERT INTO PROJECT (PNAME, PNUMBER, PLOCATION, DNUM)
+    -> VALUES
+    ->     ('ProductX', 1, 'Bellaire', 5),
+    ->     ('ProductY', 2, 'Sugarland', 5),
+    ->     ('ProductZ', 3, 'Houston', 5),
+    ->     ('Computerization', 10, 'Stafford', 4),
+    ->     ('Reorganization',20,'Houston','1')
+    ->     ('Newbenefits',30,'Stafford','4');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '('Newbenefits',30,'Stafford','4')' at line 8
+mysql>
+mysql> -- Insert the WORKS_ON
+mysql> INSERT INTO WORKS_ON (SSN, PNO, HOURS)
+    -> VALUES
+    ->     ('123456789', 1, 32.5),
+    ->     ('123456789', 2, 7.5),
+    ->     ('666884444', 3, 40.0),
+    ->     ('333445555', 2, 10.0),
+    ->     ('999887777', 30,30.0);
+ERROR 1054 (42S22): Unknown column 'SSN' in 'field list'
+mysql>
+mysql> -- Insert the DEPENDENT
+mysql> INSERT INTO DEPENDENT (ESSN, DEPENDENT_NAME, SEX, BDATE, RELATIONSHIP)
+    -> VALUES
+    ->     ('333445555', 'Alice', 'F', '1986-04-05', 'Daughter'),
+    ->     ('333445555', 'Theodore', 'M', '1983-10-25', 'Son'),
+    ->     ('987654321', 'Abner', 'M', '1942-02-28', 'Spouse'),
+    ->     ('123456789', 'Elizabeth', 'F', '1967-05-05', 'Spouse');
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`company_info`.`dependent`, CONSTRAINT `dependent_ibfk_1` FOREIGN KEY (`ESSN`) REFERENCES `employee` (`SSN`))
+mysql> -- Insert employees without the SUPER_SSN
+mysql> INSERT INTO EMPLOYEE (FNAME, MINIT, LNAME, SSN, BDATE, ADDRESS_EMP, SEX, SALARY, DNO)
+    -> VALUES
+    ->     ('John', 'B', 'Smith', '123456789', '1965-01-09', '731-Fondren-Houston-TX', 'M', 30000.00, 5),
+    ->     ('Franklin', 'T', 'Wong', '333445555', '1955-12-08', '638-Voss-Houston-TX', 'M', 40000.00, 5),
+    ->     ('Alicia', 'J', 'Zelaya', '999887777', '1968-01-19', '3321-Castle-Spring-TX', 'F', 25000.00, 4),
+    ->     ('Jennifer', 'S', 'Wallace', '987654321', '1941-06-20', '291-Berry-Bellaire-TX', 'F', 43000.00, 4),
+    ->     ('Ramesh', 'K', 'Narayan', '666884444', '1962-09-15', '975-Fire-Oak-Humble-TX', 'M', 38000.00, 5);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`company_info`.`employee`, CONSTRAINT `employee_ibfk_2` FOREIGN KEY (`DNO`) REFERENCES `department` (`DNUMBER`))
+mysql>
+mysql> -- Now update the SUPER_SSN values
+mysql> UPDATE EMPLOYEE SET SUPER_SSN = '333445555' WHERE SSN = '123456789';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> UPDATE EMPLOYEE SET SUPER_SSN = '888665555' WHERE SSN = '333445555';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> UPDATE EMPLOYEE SET SUPER_SSN = '987654321' WHERE SSN = '999887777';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> UPDATE EMPLOYEE SET SUPER_SSN = '888665555' WHERE SSN = '987654321';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> UPDATE EMPLOYEE SET SUPER_SSN = '333445555' WHERE SSN = '666884444';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> -- Insert the departments first
+mysql> INSERT INTO DEPARTMENT (DNAME, DNUMBER, MGR_SSN, MGR_START_DATE)
+    -> VALUES
+    ->     ('Research', 5, '333445555', '1988-05-22'),
+    ->     ('Administration', 4, '987654321', '1995-01-01');
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`company_info`.`department`, CONSTRAINT `department_ibfk_1` FOREIGN KEY (`MGR_SSN`) REFERENCES `employee` (`SSN`))
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>

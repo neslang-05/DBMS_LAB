@@ -1,0 +1,346 @@
+Enter password: *********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 26
+Server version: 8.0.28 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database student_info;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| student_info       |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> use student_info;
+Database changed
+mysql> create table STUDENT(
+    -> Name char(30),
+    -> Smith char(30),
+    -> Brown char(30),
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 5
+mysql> create table STUDENT(
+    -> Name char(30),
+    -> Smith char(30),
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 4
+mysql> create table STUDENT(
+    -> Name char(30),
+    -> Student_number int,
+    -> Class int,
+    -> Major char(10)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> desc STUDENT
+    -> ;
++----------------+----------+------+-----+---------+-------+
+| Field          | Type     | Null | Key | Default | Extra |
++----------------+----------+------+-----+---------+-------+
+| Name           | char(30) | YES  |     | NULL    |       |
+| Student_number | int      | YES  |     | NULL    |       |
+| Class          | int      | YES  |     | NULL    |       |
+| Major          | char(10) | YES  |     | NULL    |       |
++----------------+----------+------+-----+---------+-------+
+4 rows in set (0.02 sec)
+
+mysql>  create table COURSE(
+    -> Course_name char(50),
+    -> Course_number varchar(20),
+    -> Credit-hours int,
+    -> Department char(20)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-hours int,
+Department char(20)
+)' at line 4
+mysql>  create table COURSE(
+    -> Course_name char(50),
+    -> Course_number varchar(20),
+    -> Credit-hours int,
+    -> Department char(20)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-hours int,
+Department char(20)
+)' at line 4
+mysql> desc STUDENT
+    -> ;
++----------------+----------+------+-----+---------+-------+
+| Field          | Type     | Null | Key | Default | Extra |
++----------------+----------+------+-----+---------+-------+
+| Name           | char(30) | YES  |     | NULL    |       |
+| Student_number | int      | YES  |     | NULL    |       |
+| Class          | int      | YES  |     | NULL    |       |
+| Major          | char(10) | YES  |     | NULL    |       |
++----------------+----------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into STUDENT (Name,Student_number,Class,Major)
+    -> values('Smith',17,1,'CS')
+    -> ;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into STUDENT (Name,Student_number,Class,Major)
+    -> values('Brown',8,2,'CS');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> desc STUDENT;
++----------------+----------+------+-----+---------+-------+
+| Field          | Type     | Null | Key | Default | Extra |
++----------------+----------+------+-----+---------+-------+
+| Name           | char(30) | YES  |     | NULL    |       |
+| Student_number | int      | YES  |     | NULL    |       |
+| Class          | int      | YES  |     | NULL    |       |
+| Major          | char(10) | YES  |     | NULL    |       |
++----------------+----------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> SELECT*FROM STUDENT
+    -> ;
++-------+----------------+-------+-------+
+| Name  | Student_number | Class | Major |
++-------+----------------+-------+-------+
+| Smith |             17 |     1 | CS    |
+| Brown |              8 |     2 | CS    |
++-------+----------------+-------+-------+
+2 rows in set (0.00 sec)
+
+mysql> CREATE TABLE COURSE(
+    -> Course_name char(50),
+    -> Course_number varchar(50),
+    -> Credit_hours int,
+    -> Department char(50));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> desc COURSE
+    -> ;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| Course_name   | char(50)    | YES  |     | NULL    |       |
+| Course_number | varchar(50) | YES  |     | NULL    |       |
+| Credit_hours  | int         | YES  |     | NULL    |       |
+| Department    | char(50)    | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+4 rows in set (0.02 sec)
+
+mysql> INSERT INTO COURSE(Course_name,Course_number,Credit_hours,Department)
+
+    -> values('Intro to Computer Science','CS1310',4,'CS'),
+    -> ('Data Structures','CS3320',4,'CS'),
+    -> ('Discrete Mathematics','MATH2410',3,'MATH'),
+    -> ('Database','CS3380',3,'CS');
+Query OK, 4 rows affected (0.02 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM COURSE
+    -> ;
++---------------------------+---------------+--------------+------------+
+| Course_name               | Course_number | Credit_hours | Department |
++---------------------------+---------------+--------------+------------+
+| Intro to Computer Science | CS1310        |            4 | CS         |
+| Data Structures           | CS3320        |            4 | CS         |
+| Discrete Mathematics      | MATH2410      |            3 | MATH       |
+| Database                  | CS3380        |            3 | CS         |
++---------------------------+---------------+--------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> CREATE TABLE SECTION(
+    -> Section_identifier int,
+    -> Course_number varchar(50),
+    -> Semester char(50),
+    -> Year int,
+    -> Instructor char(50));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc SECTION
+    -> ;
++--------------------+-------------+------+-----+---------+-------+
+| Field              | Type        | Null | Key | Default | Extra |
++--------------------+-------------+------+-----+---------+-------+
+| Section_identifier | int         | YES  |     | NULL    |       |
+| Course_number      | varchar(50) | YES  |     | NULL    |       |
+| Semester           | char(50)    | YES  |     | NULL    |       |
+| Year               | int         | YES  |     | NULL    |       |
+| Instructor         | char(50)    | YES  |     | NULL    |       |
++--------------------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> insert into SECTION(Section_identifer,Course_number,Semester,Year,Ins
+tructor)
+    -> values(85,'MATH2410','Fall',07,'King'),
+    -> (92,'CS1310','Fall',07,'Anderson'),
+    -> (102,'CS3320','Spring',08,'Knuth'),
+    -> (112,'MATH2410',Fall,'08','Chang'),
+    -> (119,'CS1310','Fall',08,'Anderson'),
+    -> (135,'CS3380','Fall',08,'Stone');
+ERROR 1054 (42S22): Unknown column 'Section_identifer' in 'field list'
+mysql> insert into SECTION(Section_identifier,Course_number,Semester,Year,In
+structor)
+    -> values(85,'MATH2410','Fall',07,'King'),
+    -> (92,'CS1310','Fall',07,'Anderson'),
+    -> (102,'CS3320','Spring',08,'Knuth'),
+    -> (112,'MATH2410',Fall,'08','Chang'),
+    -> (119,'CS1310','Fall',08,'Anderson'),
+    -> (135,'CS3380','Fall',08,'Stone');
+ERROR 1054 (42S22): Unknown column 'Fall' in 'field list'
+mysql> insert into SECTION(Section_identifer,Course_number,Semester,Year,Instructor)
+    -> values(85,'MATH2410','Fall',07,'King');
+ERROR 1054 (42S22): Unknown column 'Section_identifer' in 'field list'
+mysql> insert into SECTION(Section_identifier,Course_number,Semester,Year,In
+structor)
+    -> values(85,'MATH2410','Fall',07,'King');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into SECTION(Section_identifier,Course_number,Semester,Year,Instructor)
+    -> (92,'CS1310','Fall',07,'Anderson'),
+    -> (102,'CS3320','Spring',08,'Knuth'),
+    -> (112,'MATH2410',Fall,'08','Chang'),
+    -> (119,'CS1310','Fall',08,'Anderson'),
+    -> (135,'CS3380','Fall',08,'Stone');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '92,'CS1310','Fall',07,'Anderson'),
+(102,'CS3320','Spring',08,'Knuth'),
+(112,'MAT' at line 2
+mysql> insert into SECTION(Section_identifier,Course_number,Semester,Year,Instructor)
+    -> values(92,'CS1310','Fall',07,'Anderson'),
+    -> (102,'CS3320','Spring',08,'Knuth'),
+    -> (112,'MATH2410',Fall,'08','Chang'),
+    -> (119,'CS1310','Fall',08,'Anderson'),
+    -> (135,'CS3380','Fall',08,'Stone');
+ERROR 1054 (42S22): Unknown column 'Fall' in 'field list'
+mysql> insert into SECTION(Section_identifier,Course_number,Semester,Year,Instructor)
+    -> values(92,'CS1310','Fall',07,'Anderson');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into SECTION(Section_identifier,Course_number,Semester,Year,Instructor)
+    -> values(102,'CS3320','Spring',08,'Knuth');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into SECTION(Section_identifier,Course_number,Semester,Year,Instructor)
+    -> values(112,'MATH2410',Fall,'08','Chang');
+ERROR 1054 (42S22): Unknown column 'Fall' in 'field list'
+mysql> insert into SECTION(Section_identifier,Course_number,Semester,Year,Instructor)
+    -> values(112,'MATH2410','Fall','08','Chang');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into SECTION(Section_identifier,Course_number,Semester,Year,Instructor)
+    -> values(119,'CS1310','Fall',08,'Anderson');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into SECTION(Section_identifier,Course_number,Semester,Year,Instructor)
+    -> values(135,'CS3380','Fall',08,'Stone');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select*from SECTION
+    -> ;
++--------------------+---------------+----------+------+------------+
+| Section_identifier | Course_number | Semester | Year | Instructor |
++--------------------+---------------+----------+------+------------+
+|                 85 | MATH2410      | Fall     |    7 | King       |
+|                 92 | CS1310        | Fall     |    7 | Anderson   |
+|                102 | CS3320        | Spring   |    8 | Knuth      |
+|                112 | MATH2410      | Fall     |    8 | Chang      |
+|                119 | CS1310        | Fall     |    8 | Anderson   |
+|                135 | CS3380        | Fall     |    8 | Stone      |
++--------------------+---------------+----------+------+------------+
+6 rows in set (0.00 sec)
+
+mysql> CREATE TABLE GRADE_REPORT
+    -> (
+    -> Student_number int,\
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+mysql> CREATE TABLE GRADE_REPORT(
+    -> Student_number int,
+    -> Section_identifier int,
+    -> Grade char(2));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc GRADE_REPORT
+    -> ;
++--------------------+---------+------+-----+---------+-------+
+| Field              | Type    | Null | Key | Default | Extra |
++--------------------+---------+------+-----+---------+-------+
+| Student_number     | int     | YES  |     | NULL    |       |
+| Section_identifier | int     | YES  |     | NULL    |       |
+| Grade              | char(2) | YES  |     | NULL    |       |
++--------------------+---------+------+-----+---------+-------+
+3 rows in set (0.02 sec)
+
+mysql> insert into GRADE_REPORT(Student_number,Section_identifier,Grade)
+    -> values(17,112,'B'),
+    -> (17,119,'C'),
+    -> (8,85,'A'),
+    -> (8,92,'A'),
+    -> (8,102,'B'),
+    -> (8,135,'A');
+Query OK, 6 rows affected (0.01 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM GRADE_REPORT
+    -> ;
++----------------+--------------------+-------+
+| Student_number | Section_identifier | Grade |
++----------------+--------------------+-------+
+|             17 |                112 | B     |
+|             17 |                119 | C     |
+|              8 |                 85 | A     |
+|              8 |                 92 | A     |
+|              8 |                102 | B     |
+|              8 |                135 | A     |
++----------------+--------------------+-------+
+6 rows in set (0.00 sec)
+
+mysql> CREATE TABLE PREREQUISITE(
+    -> Course_number varchar(50),
+    -> Prerequisite_number varchar(50));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc PREREQUISITE
+    -> ;
++---------------------+-------------+------+-----+---------+-------+
+| Field               | Type        | Null | Key | Default | Extra |
++---------------------+-------------+------+-----+---------+-------+
+| Course_number       | varchar(50) | YES  |     | NULL    |       |
+| Prerequisite_number | varchar(50) | YES  |     | NULL    |       |
++---------------------+-------------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+mysql> insert into PREREQUISITE(
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> insert into PREREQUISITE(Course_number,Prerequisite_number)
+    -> values('CS3380','CS3320'),
+    -> ('CS3380','MATH2410'),
+    -> ('CS3320','CS1310');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM PREREQUISITE
+    -> ;
++---------------+---------------------+
+| Course_number | Prerequisite_number |
++---------------+---------------------+
+| CS3380        | CS3320              |
+| CS3380        | MATH2410            |
+| CS3320        | CS1310              |
++---------------+---------------------+
+3 rows in set (0.00 sec)
+
+mysql>
